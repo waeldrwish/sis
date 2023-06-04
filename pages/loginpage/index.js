@@ -1,0 +1,34 @@
+import React from 'react'
+import Router from 'next/router'
+import { getUsersFromFirestore, loginEmailAndPassword } from '../api/database';
+
+export default function Index() {
+
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  return (
+    <div className = 'block w-1/3 m-auto mt-9 p-2' >
+        <h1 className='text-center text-lg font-bold mb-2 m-auto'>Signin</h1>
+        <from>
+            <label className='w-full'>Email</label>
+            <input type="text" placeholder="Email" className='p-2 w-full rounded-md mt-1 bg-zinc-200'
+            onChange={(e)=>{
+              setUsername(e.currentTarget.value);
+            }}/>
+            <label className='w-full'>Password</label>
+            <input type="password" placeholder="Password" className='p-2 w-full rounded-md mt-1 bg-zinc-200'
+            onChange={(e)=>{
+              setPassword(e.currentTarget.value);
+            }}/>
+            <button className='mt-2 w-full bg-teal-400 rounded-md p-1 text-white font-bold hover:bg-teal-500'
+            onClick={()=>{
+              loginEmailAndPassword(username, password);
+              getUsersFromFirestore(username);
+            }}>Signin</button>
+            <button className='mt-2 w-full bg-red-400 rounded-md p-1 text-white font-bold hover:bg-red-500' onClick={()=>{
+                Router.push('/create-account');
+            }}>Signup</button>
+        </from>
+    </div>
+  )
+}
